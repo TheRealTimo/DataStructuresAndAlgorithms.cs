@@ -82,6 +82,7 @@
             this.form_button_initData.TabIndex = 2;
             this.form_button_initData.Text = "Save";
             this.form_button_initData.UseVisualStyleBackColor = true;
+            this.form_button_initData.Click += new System.EventHandler(this.form_button_initData_Click);
             // 
             // form_label_currentStructureTitle
             // 
@@ -91,7 +92,6 @@
             this.form_label_currentStructureTitle.Size = new System.Drawing.Size(109, 13);
             this.form_label_currentStructureTitle.TabIndex = 3;
             this.form_label_currentStructureTitle.Text = "Current datastructure:";
-            this.form_label_currentStructureTitle.Click += new System.EventHandler(this.form_label_currentStructureTitle_Click);
             // 
             // form_label_currentStructure
             // 
@@ -101,7 +101,6 @@
             this.form_label_currentStructure.Size = new System.Drawing.Size(33, 13);
             this.form_label_currentStructure.TabIndex = 4;
             this.form_label_currentStructure.Text = "None";
-            this.form_label_currentStructure.Click += new System.EventHandler(this.form_label_currentStructure_Click);
             // 
             // form_label_convert
             // 
@@ -132,6 +131,7 @@
             this.form_button_convert.TabIndex = 7;
             this.form_button_convert.Text = "Convert";
             this.form_button_convert.UseVisualStyleBackColor = true;
+            this.form_button_convert.Click += new System.EventHandler(this.form_button_convert_Click);
             // 
             // form_label_search
             // 
@@ -222,6 +222,9 @@
             // form_comboBox_sort
             // 
             this.form_comboBox_sort.FormattingEnabled = true;
+            this.form_comboBox_sort.Items.AddRange(new object[] {
+            "Bubble Sort",
+            "Quick Sort"});
             this.form_comboBox_sort.Location = new System.Drawing.Point(12, 261);
             this.form_comboBox_sort.Name = "form_comboBox_sort";
             this.form_comboBox_sort.Size = new System.Drawing.Size(121, 21);
