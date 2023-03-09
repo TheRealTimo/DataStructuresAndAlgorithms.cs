@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A29D0956-5C83-4F46-A9E4-A32AFC1B40AC}</ProjectGuid>
+    <ProjectGuid>{BCD30437-70BB-4554-A7B0-60E45A9581F7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>DaA</RootNamespace>
     <AssemblyName>DaA</AssemblyName>
@@ -54,6 +54,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
