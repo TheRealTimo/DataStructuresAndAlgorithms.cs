@@ -19,7 +19,7 @@
             }
             base.Dispose(disposing);
         }
-
+ 
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -209,6 +209,7 @@
             this.form_button_search.TabIndex = 16;
             this.form_button_search.Text = "Search";
             this.form_button_search.UseVisualStyleBackColor = true;
+            this.form_button_search.Click += new System.EventHandler(this.form_button_search_Click);
             // 
             // form_label_sort
             // 
@@ -270,6 +271,7 @@
             this.form_button_sort.TabIndex = 23;
             this.form_button_sort.Text = "Sort";
             this.form_button_sort.UseVisualStyleBackColor = true;
+            this.form_button_sort.Click += new System.EventHandler(this.form_button_sort_Click);
             // 
             // Form1
             // 

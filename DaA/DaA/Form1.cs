@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,6 +12,11 @@ namespace DaA
 {
     public partial class Form1 : Form
     {
+
+        DoublyLinkedList<int> myList;
+        Stack<int> myStack;
+        Queue<int> myQueue;
+
         public Form1()
         {
             InitializeComponent();
@@ -65,21 +71,21 @@ namespace DaA
             switch (convertType)
             {
                 case "Linked List":
-                    DoublyLinkedList<int> myList = new DoublyLinkedList<int>();
+                     myList = new DoublyLinkedList<int>();
                     foreach (int number in intArray)
                     {
                         myList.AddFirst(number);
                     }
                     break;
                 case "Stack":
-                    Stack<int> myStack = new Stack<int>();
+                    myStack = new Stack<int>();
                     foreach (int number in intArray)
                     {
                         myStack.Push(number);
                     }
                     break;
                 case "Queue":
-                    Queue<int> myQueue = new Queue<int>();
+                    myQueue = new Queue<int>();
                     foreach (int number in intArray)
                     {
                     myQueue.Enqueue(number);
@@ -91,6 +97,73 @@ namespace DaA
             }
             form_label_currentStructure.Text = convertType.ToString();
 
+        }
+
+        private void form_button_search_Click(object sender, EventArgs e)
+        {
+            //Make sure the user has entered a number to search for
+            if (form_textBox_search.Text == "" )
+            {
+                MessageBox.Show("Please enter a number to search for");
+                return;
+            }
+            //Make sure the user has entered a number to search for
+            if (!System.Text.RegularExpressions.Regex.IsMatch(form_textBox_search.Text, @"^[0-9]+$"))
+            {
+                MessageBox.Show("Please enter only numbers");
+                return;
+            }
+            //Make sure  form_numericUpDown_searchFrom is smaller or equal to form_numericUpDown_searchUntil
+            if (form_numericUpDown_searchFrom.Value > form_numericUpDown_searchUntil.Value)
+            {
+                MessageBox.Show("Please make sure the search from is smaller or equal to the search until");
+                return;
+            }
+            if (form_label_currentStructure.Text == "None")
+            {
+                MessageBox.Show("Please convert the data first");
+                return;
+            }
+            string searchType = form_comboBox_search.Text;
+            string dataStructure = form_label_currentStructure.Text;
+            int searchFrom = (int)form_numericUpDown_searchFrom.Value;
+            int searchUntil = (int)form_numericUpDown_searchUntil.Value;
+            int searchFor = int.Parse(form_textBox_search.Text);
+
+            switch (searchType)
+            {
+                case "Linear Search":
+                    if (dataStructure == "Linked List")
+                    {
+                        myList.LinearSearch(searchFor, searchFrom, searchUntil);
+                    }
+                    else if (dataStructure == "Stack")
+                    {
+                        bool test = myStack.LinearSearch(searchFor, searchFrom, searchUntil);
+                        MessageBox.Show(test.ToString());
+                    }
+                    else if (dataStructure == "Queue")
+                    {
+                        MessageBox.Show("Needs implementation");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error");
+                    }
+                   
+                    break;
+                case "Binary":
+                    break;
+                default:
+                    MessageBox.Show("Please select a search type");
+                    break;
+            }
+
+        }
+
+        private void form_button_sort_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

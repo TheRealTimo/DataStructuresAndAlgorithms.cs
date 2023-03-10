@@ -44,7 +44,7 @@ namespace DaA
             return Items[lastIndex];
         }
 
-        public bool LinearSearch(T searchValue, int start = 0, int end = int.MaxValue)
+        public bool LinearSearch(T searchValue, int start, int end)
         {
             int currentPosition = 0;
 
