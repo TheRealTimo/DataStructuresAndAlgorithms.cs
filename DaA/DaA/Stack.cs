@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace DaA
 {
-    internal class Stack
+    internal class Stack<T>
     {
-        private List<int> Items;
+        private List<T> Items;
 
         public Stack()
         {
-            Items = new List<int>();
+            Items = new List<T>();
         }
 
-        public void Push(int item)
+        public void Push(T item)
         {
             Items.Add(item);
         }
 
-        public int Pop()
+        public T Pop()
         {
             if (Items.Count == 0)
             {
@@ -28,12 +28,12 @@ namespace DaA
             }
 
             int lastIndex = Items.Count - 1;
-            int lastItem = Items[lastIndex];
+            T lastItem = Items[lastIndex];
             Items.RemoveAt(lastIndex);
             return lastItem;
         }
 
-        public int Peek()
+        public T Peek()
         {
             if (Items.Count == 0)
             {
@@ -44,7 +44,7 @@ namespace DaA
             return Items[lastIndex];
         }
 
-        public bool LinearSearch(int searchValue, int start = 0, int end = int.MaxValue)
+        public bool LinearSearch(T searchValue, int start = 0, int end = int.MaxValue)
         {
             int currentPosition = 0;
 
@@ -52,7 +52,7 @@ namespace DaA
             {
                 if (currentPosition >= start && currentPosition <= end)
                 {
-                    if (Items[i] == searchValue)
+                    if (EqualityComparer<T>.Default.Equals(Items[i], searchValue))
                     {
                         return true;
                     }
@@ -69,12 +69,12 @@ namespace DaA
             return false;
         }
 
-        public bool ExponentialSearch(int searchValue, int start = 0, int end = int.MaxValue)
+        public bool ExponentialSearch(T searchValue, int start = 0, int end = int.MaxValue)
         {
             int position = 0;
             int bound = 1;
 
-            while (bound < end - start + 1 && position < Items.Count && Items[position] < searchValue)
+            while (bound < end - start + 1 && position < Items.Count && Comparer<T>.Default.Compare(Items[position], searchValue) < 0)
             {
                 position += bound;
                 bound *= 2;
@@ -87,11 +87,11 @@ namespace DaA
             {
                 int mid = (left + right) / 2;
 
-                if (Items[mid] == searchValue)
+                if (EqualityComparer<T>.Default.Equals(Items[mid], searchValue))
                 {
                     return true;
                 }
-                else if (Items[mid] < searchValue)
+                else if (Comparer<T>.Default.Compare(Items[mid], searchValue) < 0)
                 {
                     left = mid + 1;
                 }
@@ -121,7 +121,7 @@ namespace DaA
                 {
                     if (currentPosition >= start && currentPosition <= end)
                     {
-                        if (Items[j] > Items[j + 1])
+                        if (Comparer<T>.Default.Compare(Items[j], Items[j + 1]) > 0)
                         {
                             Swap(j, j + 1);
                             swapped = true;
@@ -160,12 +160,12 @@ namespace DaA
                 return;
             }
         }
+
         private void Swap(int index1, int index2)
         {
-            int temp = Items[index1];
+            T temp = Items[index1];
             Items[index1] = Items[index2];
             Items[index2] = temp;
         }
-
     }
 }

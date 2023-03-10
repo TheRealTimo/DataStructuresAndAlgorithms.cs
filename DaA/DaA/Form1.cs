@@ -60,6 +60,36 @@ namespace DaA
             {
                 intArray[i] = int.Parse(stringArray[i]);
             }
+            string convertType = form_comboBox_convert.Text;
+
+            switch (convertType)
+            {
+                case "Linked List":
+                    DoublyLinkedList<int> myList = new DoublyLinkedList<int>();
+                    foreach (int number in intArray)
+                    {
+                        myList.AddFirst(number);
+                    }
+                    break;
+                case "Stack":
+                    Stack<int> myStack = new Stack<int>();
+                    foreach (int number in intArray)
+                    {
+                        myStack.Push(number);
+                    }
+                    break;
+                case "Queue":
+                    Queue<int> myQueue = new Queue<int>();
+                    foreach (int number in intArray)
+                    {
+                    myQueue.Enqueue(number);
+                    }
+                    break;
+                default:
+                    MessageBox.Show("Please select a convert type");
+                    break;
+            }
+            form_label_currentStructure.Text = convertType.ToString();
 
         }
     }
