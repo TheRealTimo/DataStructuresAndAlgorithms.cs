@@ -162,7 +162,7 @@
             // 
             this.form_comboBox_search.FormattingEnabled = true;
             this.form_comboBox_search.Items.AddRange(new object[] {
-            "Binary Search",
+            "Exponential Search",
             "Linear Search"});
             this.form_comboBox_search.Location = new System.Drawing.Point(156, 210);
             this.form_comboBox_search.Name = "form_comboBox_search";
@@ -225,7 +225,7 @@
             this.form_comboBox_sort.FormattingEnabled = true;
             this.form_comboBox_sort.Items.AddRange(new object[] {
             "Bubble Sort",
-            "Quick Sort"});
+            "Exponential Search"});
             this.form_comboBox_sort.Location = new System.Drawing.Point(12, 261);
             this.form_comboBox_sort.Name = "form_comboBox_sort";
             this.form_comboBox_sort.Size = new System.Drawing.Size(121, 21);

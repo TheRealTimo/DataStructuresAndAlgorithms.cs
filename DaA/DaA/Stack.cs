@@ -150,6 +150,7 @@ namespace DaA
                 return;
             }
 
+            end = Math.Min(end, Items.Count - 1);
             QuickSortRecursive(start, end);
         }
 
@@ -159,7 +160,30 @@ namespace DaA
             {
                 return;
             }
+
+            int pivotIndex = Partition(start, end);
+            QuickSortRecursive(start, pivotIndex - 1);
+            QuickSortRecursive(pivotIndex + 1, end);
         }
+
+        private int Partition(int start, int end)
+        {
+            T pivot = Items[end];
+            int i = start - 1;
+
+            for (int j = start; j < end; j++)
+            {
+                if (Comparer<T>.Default.Compare(Items[j], pivot) < 0)
+                {
+                    i++;
+                    Swap(i, j);
+                }
+            }
+
+            Swap(i + 1, end);
+            return i + 1;
+        }
+
 
         private void Swap(int index1, int index2)
         {
@@ -167,5 +191,24 @@ namespace DaA
             Items[index1] = Items[index2];
             Items[index2] = temp;
         }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+
+            for (int i = Items.Count - 1; i >= 0; i--)
+            {
+                sb.Append(Items[i]);
+
+                if (i > 0)
+                {
+                    sb.Append(", ");
+                }
+            }
+
+            sb.Append("]");
+            return sb.ToString();
+        }
+
     }
 }

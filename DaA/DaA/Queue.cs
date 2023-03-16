@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace DataStructures
+namespace DaA
 {
     internal class Queue<T> where T : IComparable<T>
     {
@@ -39,30 +40,24 @@ namespace DataStructures
             return items[0];
         }
 
-        public bool LinearSearch(T searchValue, int start = 0, int end = int.MaxValue)
+        public bool LinearSearch(T searchValue, int start, int end)
         {
-            int currentPosition = 0;
-
-            for (int i = 0; i < items.Count; i++)
+            if (start < 0 || end >= items.Count || start > end)
             {
-                if (currentPosition >= start && currentPosition <= end)
-                {
-                    if (items[i].CompareTo(searchValue) == 0)
-                    {
-                        return true;
-                    }
-                }
+                throw new ArgumentException("Invalid range for LinearSearch");
+            }
 
-                currentPosition++;
-
-                if (currentPosition > end)
+            for (int i = start; i <= end; i++)
+            {
+                if (items[i].CompareTo(searchValue) == 0)
                 {
-                    break;
+                    return true;
                 }
             }
 
             return false;
         }
+
 
         public bool ExponentialSearch(T searchValue, int start = 0, int end = int.MaxValue)
         {
@@ -145,6 +140,7 @@ namespace DataStructures
                 return;
             }
 
+            end = Math.Min(end, items.Count - 1);
             QuickSortRecursive(start, end);
         }
 
@@ -154,7 +150,31 @@ namespace DataStructures
             {
                 return;
             }
+
+            int pivotIndex = Partition(start, end);
+            QuickSortRecursive(start, pivotIndex - 1);
+            QuickSortRecursive(pivotIndex + 1, end);
         }
+
+        private int Partition(int start, int end)
+        {
+            T pivot = items[end];
+            int i = start - 1;
+
+            for (int j = start; j < end; j++)
+            {
+                if (items[j].CompareTo(pivot) < 0)
+                {
+                    i++;
+                    Swap(i, j);
+                }
+            }
+
+            Swap(i + 1, end);
+            return i + 1;
+        }
+
+
         private void Swap(int index1, int index2)
         {
             if (index1 < 0 || index1 >= items.Count || index2 < 0 || index2 >= items.Count)
@@ -166,6 +186,26 @@ namespace DataStructures
             items[index1] = items[index2];
             items[index2] = temp;
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                sb.Append(items[i]);
+
+                if (i < items.Count - 1)
+                {
+                    sb.Append(", ");
+                }
+            }
+
+            sb.Append("]");
+            return sb.ToString();
+        }
+
 
     }
 }

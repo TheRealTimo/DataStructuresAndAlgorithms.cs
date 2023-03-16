@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DaA
 {
-    public class DoublyLinkedList<T>
+    public class DoublyLinkedList<T> where T: IComparable<T>
     {
         private class Node
         {
@@ -62,9 +63,9 @@ namespace DaA
 
         public bool LinearSearch(T value, int startIndex, int endIndex)
         {
-            if (startIndex < 0 || endIndex >= Count)
+            if (startIndex < 0 || endIndex >= Count || startIndex > endIndex)
             {
-                throw new ArgumentOutOfRangeException("startIndex and endIndex must be within the bounds of the list.");
+                throw new ArgumentOutOfRangeException("startIndex and endIndex must be within the bounds of the list, and startIndex must not be greater than endIndex.");
             }
 
             Node currentNode = head;
@@ -84,6 +85,8 @@ namespace DaA
             return false;
         }
 
+
+
         public int Count
         {
             get
@@ -100,44 +103,56 @@ namespace DaA
                 return count;
             }
         }
-        public bool BinarySearch(T value, int startIndex, int endIndex)
+
+        public bool ExponentialSearch(T searchValue, int start = 0, int end = int.MaxValue)
         {
-            if (startIndex < 0 || endIndex >= Count || startIndex > endIndex)
+            if (Count == 0)
             {
-                throw new ArgumentOutOfRangeException("startIndex and endIndex must be within the bounds of the list, and startIndex must not be greater than endIndex.");
+                return false;
             }
 
-            int leftIndex = startIndex;
-            int rightIndex = endIndex;
+            int position = start;
+            int bound = 1;
+            Node currentNode = GetNodeAt(position);
 
-            while (leftIndex <= rightIndex)
+            while (bound < end - start + 1 && position < Count && Comparer<T>.Default.Compare(currentNode.Value, searchValue) < 0)
             {
-                int middleIndex = (leftIndex + rightIndex) / 2;
-
-                Node currentNode = head;
-                for (int i = 0; i < middleIndex; i++)
+                position += bound;
+                for (int i = 0; i < bound && currentNode != null; i++)
                 {
                     currentNode = currentNode.Next;
                 }
+                bound *= 2;
+            }
 
-                int comparison = Comparer<T>.Default.Compare(currentNode.Value, value);
+            int left = Math.Max(position - bound / 2, start);
+            int right = Math.Min(position + bound / 2, Count - 1);
 
-                if (comparison == 0)
+            currentNode = GetNodeAt(left);
+
+            while (left <= right)
+            {
+                if (EqualityComparer<T>.Default.Equals(currentNode.Value, searchValue))
                 {
                     return true;
                 }
-                else if (comparison < 0)
+                else if (Comparer<T>.Default.Compare(currentNode.Value, searchValue) < 0)
                 {
-                    leftIndex = middleIndex + 1;
+                    left++;
+                    currentNode = currentNode.Next;
                 }
                 else
                 {
-                    rightIndex = middleIndex - 1;
+                    right--;
+                    currentNode = currentNode.Previous;
                 }
             }
 
             return false;
         }
+
+
+
 
         public void BubbleSort(int startIndex, int endIndex)
         {
@@ -178,9 +193,9 @@ namespace DaA
             } while (swapped);
         }
 
-        public void Quicksort(int startIndex, int endIndex)
+        public void QuickSort(int startIndex, int endIndex)
         {
-            if (startIndex < 0 || endIndex >= Count || startIndex >= endIndex)
+            if (startIndex < 0 || endIndex >= Count || startIndex > endIndex)
             {
                 throw new ArgumentException("Invalid start and/or end index.");
             }
@@ -193,19 +208,19 @@ namespace DaA
 
         private void Quicksort(Node left, Node right)
         {
-            if (left == right)
+            if (left == null || right == null || left == right || left.Previous == right)
             {
                 return;
             }
 
             Node pivot = Partition(left, right);
 
-            if (pivot != null && pivot != left)
+            if (pivot != null && pivot.Previous != null)
             {
                 Quicksort(left, pivot.Previous);
             }
 
-            if (pivot != null && pivot != right)
+            if (pivot != null && pivot.Next != null)
             {
                 Quicksort(pivot.Next, right);
             }
@@ -213,26 +228,38 @@ namespace DaA
 
         private Node Partition(Node left, Node right)
         {
+            if (left == right)
+            {
+                return left;
+            }
+
             Node pivot = right;
             Node current = left;
+            Node prev = null;
 
-            while (current != null && current != pivot)
+            while (current != pivot)
             {
                 int comparison = Comparer<T>.Default.Compare(current.Value, pivot.Value);
 
                 if (comparison > 0)
                 {
+                    Node nextNode = current.Next;
                     Swap(current, pivot);
+                    Swap(current, pivot.Previous);
+
                     pivot = pivot.Previous;
+                    current = prev != null ? prev.Next : left;
                 }
                 else
                 {
+                    prev = current;
                     current = current.Next;
                 }
             }
 
             return pivot;
         }
+
 
         private void Swap(Node left, Node right)
         {
@@ -259,6 +286,24 @@ namespace DaA
 
             return currentNode;
         }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            Node currentNode = head;
+
+            while (currentNode != null)
+            {
+                sb.Append(currentNode.Value.ToString());
+                if (currentNode.Next != null)
+                {
+                    sb.Append(", ");
+                }
+                currentNode = currentNode.Next;
+            }
+
+            return sb.ToString();
+        }
+
 
     }
 
