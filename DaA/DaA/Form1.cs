@@ -13,9 +13,9 @@ namespace DaA
     public partial class Form1 : Form
     {
 
-        DoublyLinkedList<int> myList;
-        Stack<int> myStack;
-        Queue<int> myQueue;
+        myDoublyLinkedList<int> myList;
+        myStack<int> myStack;
+        myQueue<int> myQueue;
 
         public Form1()
         {
@@ -46,7 +46,7 @@ namespace DaA
             form_numericUpDown_searchFrom.Minimum = 0;
             form_numericUpDown_searchFrom.Maximum = numberOfNumbers - 1;
             form_numericUpDown_searchUntil.Minimum = 0;
-            form_numericUpDown_searchUntil.Maximum = numberOfNumbers -1 ;
+            form_numericUpDown_searchUntil.Maximum = numberOfNumbers - 1;
             form_numericUpDown_sortFrom.Minimum = 0;
             form_numericUpDown_sortFrom.Maximum = numberOfNumbers - 1;
             form_numericUpDown_sortUntil.Minimum = 0;
@@ -71,24 +71,24 @@ namespace DaA
             switch (convertType)
             {
                 case "Linked List":
-                     myList = new DoublyLinkedList<int>();
+                    myList = new myDoublyLinkedList<int>();
                     foreach (int number in intArray)
                     {
                         myList.AddLast(number);
                     }
                     break;
                 case "Stack":
-                    myStack = new Stack<int>();
+                    myStack = new myStack<int>();
                     foreach (int number in intArray)
                     {
                         myStack.Push(number);
                     }
                     break;
                 case "Queue":
-                    myQueue = new Queue<int>();
+                    myQueue = new myQueue<int>();
                     foreach (int number in intArray)
                     {
-                    myQueue.Enqueue(number);
+                        myQueue.Enqueue(number);
                     }
                     break;
                 default:
@@ -101,19 +101,18 @@ namespace DaA
 
         private void form_button_search_Click(object sender, EventArgs e)
         {
-            //Make sure the user has entered a number to search for
-            if (form_textBox_search.Text == "" )
+            if (form_textBox_search.Text == "")
             {
                 MessageBox.Show("Please enter a number to search for");
                 return;
             }
-            //Make sure the user has entered a number to search for
+
             if (!System.Text.RegularExpressions.Regex.IsMatch(form_textBox_search.Text, @"^[0-9]+$"))
             {
                 MessageBox.Show("Please enter only numbers");
                 return;
             }
-            //Make sure  form_numericUpDown_searchFrom is smaller or equal to form_numericUpDown_searchUntil
+            
             if (form_numericUpDown_searchFrom.Value > form_numericUpDown_searchUntil.Value)
             {
                 MessageBox.Show("Please make sure the search from is smaller or equal to the search until");
@@ -153,24 +152,24 @@ namespace DaA
                     {
                         MessageBox.Show("Error");
                     }
-                   
+
                     break;
                 case "Exponential Search":
                     if (dataStructure == "Linked List")
                     {
-                        myList.BubbleSort(0,0); // Sort the list first
+                        myList.BubbleSort(0, 0); // Sort the list first
                         bool llbs = myList.ExponentialSearch(searchFor, searchFrom, searchUntil);
                         MessageBox.Show(llbs.ToString());
                     }
                     else if (dataStructure == "Stack")
                     {
-                        myStack.BubbleSort(0,0); // Sort the stack first
+                        myStack.BubbleSort(0, 0); // Sort the stack first
                         bool sbs = myStack.ExponentialSearch(searchFor, searchFrom, searchUntil);
                         MessageBox.Show(sbs.ToString());
                     }
                     else if (dataStructure == "Queue")
                     {
-                        myQueue.BubbleSort(0,0); // Sort the queue first
+                        myQueue.BubbleSort(0, 0); // Sort the queue first
                         bool qbs = myQueue.ExponentialSearch(searchFor, searchFrom, searchUntil);
                         MessageBox.Show(qbs.ToString());
                     }
