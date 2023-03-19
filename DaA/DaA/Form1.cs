@@ -13,7 +13,7 @@ namespace DaA
     public partial class Form1 : Form
     {
 
-        myDoublyLinkedList<int> myList;
+        MyDoublyLinkedList<int> myList;
         myStack<int> myStack;
         myQueue<int> myQueue;
 
@@ -71,7 +71,7 @@ namespace DaA
             switch (convertType)
             {
                 case "Linked List":
-                    myList = new myDoublyLinkedList<int>();
+                    myList = new MyDoublyLinkedList<int>();
                     foreach (int number in intArray)
                     {
                         myList.AddLast(number);
@@ -134,19 +134,19 @@ namespace DaA
                 case "Linear Search":
                     if (dataStructure == "Linked List")
                     {
-                        bool llls = myList.LinearSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(llls.ToString());
+                        //bool llls = myList.LinearSearch(searchFor, searchFrom, searchUntil);
+                        //MessageBox.Show(llls.ToString());
 
                     }
                     else if (dataStructure == "Stack")
                     {
-                        bool sls = myStack.LinearSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(sls.ToString());
+                        //bool sls = myStack.LinearSearch(searchFor, searchFrom, searchUntil);
+                        //MessageBox.Show(sls.ToString());
                     }
                     else if (dataStructure == "Queue")
                     {
-                        bool qls = myQueue.LinearSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(qls.ToString());
+                        //bool qls = myQueue.LinearSearch(searchFor, searchFrom, searchUntil);
+                        //MessageBox.Show(qls.ToString());
                     }
                     else
                     {
@@ -158,20 +158,20 @@ namespace DaA
                     if (dataStructure == "Linked List")
                     {
                         myList.BubbleSort(0, 0); // Sort the list first
-                        bool llbs = myList.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(llbs.ToString());
+                        //bool llbs = myList.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        //MessageBox.Show(llbs.ToString());
                     }
                     else if (dataStructure == "Stack")
                     {
-                        myStack.BubbleSort(0, 0); // Sort the stack first
-                        bool sbs = myStack.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(sbs.ToString());
+                        //myStack.BubbleSort(0, 0); // Sort the stack first
+                        //bool sbs = myStack.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        //MessageBox.Show(sbs.ToString());
                     }
                     else if (dataStructure == "Queue")
                     {
-                        myQueue.BubbleSort(0, 0); // Sort the queue first
-                        bool qbs = myQueue.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(qbs.ToString());
+                        //myQueue.BubbleSort(0, 0); // Sort the queue first
+                        //bool qbs = myQueue.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        //MessageBox.Show(qbs.ToString());
                     }
                     else
                     {
@@ -197,18 +197,18 @@ namespace DaA
                 case "Bubble Sort":
                     if (dataStructure == "Linked List")
                     {
-                        myList.BubbleSort(sortFrom, sortUntil);
-                        MessageBox.Show(myList.ToString());
+                        //myList.BubbleSort(sortFrom, sortUntil);
+                        //MessageBox.Show(myList.ToString());
                     }
                     else if (dataStructure == "Stack")
                     {
-                        myStack.BubbleSort(sortFrom, sortUntil);
-                        MessageBox.Show(myStack.ToString());
+                        //myStack.BubbleSort(sortFrom, sortUntil);
+                        //MessageBox.Show(myStack.ToString());
                     }
                     else if (dataStructure == "Queue")
                     {
-                        myQueue.BubbleSort(sortFrom, sortUntil);
-                        MessageBox.Show(myQueue.ToString());
+                        //myQueue.BubbleSort(sortFrom, sortUntil);
+                        //MessageBox.Show(myQueue.ToString());
                     }
                     else
                     {
@@ -218,18 +218,18 @@ namespace DaA
                 case "Quick Sort":
                     if (dataStructure == "Linked List")
                     {
-                        myList.QuickSort(sortFrom, sortUntil);
-                        MessageBox.Show(myList.ToString());
+                        //myList.QuickSort(sortFrom, sortUntil);
+                        //MessageBox.Show(myList.ToString());
                     }
                     else if (dataStructure == "Stack")
                     {
-                        myStack.QuickSort(sortFrom, sortUntil);
-                        MessageBox.Show(myStack.ToString());
+                        //myStack.QuickSort(sortFrom, sortUntil);
+                        //MessageBox.Show(myStack.ToString());
                     }
                     else if (dataStructure == "Queue")
                     {
-                        myQueue.QuickSort(sortFrom, sortUntil);
-                        MessageBox.Show(myQueue.ToString());
+                        //myQueue.QuickSort(sortFrom, sortUntil);
+                        //MessageBox.Show(myQueue.ToString());
                     }
                     else
                     {
