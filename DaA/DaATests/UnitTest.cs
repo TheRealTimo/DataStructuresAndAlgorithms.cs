@@ -153,7 +153,7 @@ namespace DaATests
             stack.Push(8);
             stack.Push(3);
 
-            stack.BubbleSort(0, stack.Count -1);
+            stack.BubbleSort(0, stack.Count - 1);
 
             Assert.AreEqual("1, 2, 3, 5, 8, 9", string.Join(", ", stack.GetItems()));
         }
@@ -185,7 +185,7 @@ namespace DaATests
             stack.Push(8);
             stack.Push(3);
 
-            stack.QuickSort(0, stack.Count -1);
+            stack.QuickSort(0, stack.Count - 1);
 
             Assert.AreEqual("1, 2, 3, 5, 8, 9", string.Join(", ", stack.GetItems()));
         }
@@ -206,4 +206,96 @@ namespace DaATests
             Assert.AreEqual("5, 1, 2, 3, 8, 9", string.Join(", ", stack.GetItems()));
         }
     }
+
+    [TestClass]
+    public class myQueueTests
+    {
+        [TestMethod]
+        public void TestBubbleSort()
+        {
+            var queue = new myQueue<int>();
+            queue.Enqueue(5);
+            queue.Enqueue(2);
+            queue.Enqueue(9);
+            queue.Enqueue(1);
+            queue.Enqueue(8);
+            queue.Enqueue(3);
+            queue.BubbleSort(0, queue.Count - 1);
+            Assert.AreEqual("1, 2, 3, 5, 8, 9", string.Join(", ", queue.GetItems()));
+        }
+
+        [TestMethod]
+        public void TestBubbleSortPartialRange()
+        {
+            var queue = new myQueue<int>();
+            queue.Enqueue(5);
+            queue.Enqueue(2);
+            queue.Enqueue(9);
+            queue.Enqueue(1);
+            queue.Enqueue(8);
+            queue.Enqueue(3);
+            queue.BubbleSort(1, queue.Count - 1);
+            Assert.AreEqual("5, 1, 2, 3, 8, 9", string.Join(", ", queue.GetItems()));
+        }
+
+        [TestMethod]
+        public void TestQuickSort()
+        {
+            var queue = new myQueue<int>();
+            queue.Enqueue(5);
+            queue.Enqueue(2);
+            queue.Enqueue(9);
+            queue.Enqueue(1);
+            queue.Enqueue(8);
+            queue.Enqueue(3);
+            queue.QuickSort(0, queue.Count - 1);
+            Assert.AreEqual("1, 2, 3, 5, 8, 9", string.Join(", ", queue.GetItems()));
+        }
+
+        [TestMethod]
+        public void TestQuickSortPartialRange()
+        {
+            var queue = new myQueue<int>();
+            queue.Enqueue(5);
+            queue.Enqueue(2);
+            queue.Enqueue(9);
+            queue.Enqueue(1);
+            queue.Enqueue(8);
+            queue.Enqueue(3);
+            queue.QuickSort(1, queue.Count - 1);
+            Assert.AreEqual("5, 1, 2, 3, 8, 9", string.Join(", ", queue.GetItems()));
+        }
+
+        [TestMethod]
+        public void TestLinearSearch()
+        {
+            var queue = new myQueue<int>();
+            queue.Enqueue(5);
+            queue.Enqueue(2);
+            queue.Enqueue(9);
+            queue.Enqueue(1);
+            queue.Enqueue(8);
+            queue.Enqueue(3);
+            Assert.IsTrue(queue.LinearSearch(9, 2, 4));
+            Assert.IsFalse(queue.LinearSearch(7, 2, 4));
+            Assert.IsFalse(queue.LinearSearch(9, 0, 1));
+        }
+
+        [TestMethod]
+        public void TestExponentialSearch()
+        {
+            var queue = new myQueue<int>();
+            queue.Enqueue(5);
+            queue.Enqueue(2);
+            queue.Enqueue(9);
+            queue.Enqueue(1);
+            queue.Enqueue(8);
+            queue.Enqueue(3);
+            Assert.IsTrue(queue.ExponentialSearch(9, 2, 4));
+            Assert.IsFalse(queue.ExponentialSearch(7, 2, 4));
+            Assert.IsFalse(queue.ExponentialSearch(9, 0, 1));
+        }
+
+    }
 }
+

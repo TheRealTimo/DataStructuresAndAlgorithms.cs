@@ -36,7 +36,7 @@ namespace DaA
                 MessageBox.Show("Please enter only numbers and , and space");
                 return;
             }
-
+            
             if (form_textBox_initData.Text[0] == ',' || form_textBox_initData.Text[0] == ' ' || form_textBox_initData.Text[form_textBox_initData.Text.Length - 1] == ',' || form_textBox_initData.Text[form_textBox_initData.Text.Length - 1] == ' ')
             {
                 MessageBox.Show("Please only start and end with a number");
