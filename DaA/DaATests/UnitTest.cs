@@ -82,9 +82,9 @@ namespace DaATests
             list.AddLast(8);
             list.AddLast(3);
 
-            Assert.IsTrue(list.LinearSearch(9, 0, list.Count - 1));
-            Assert.IsFalse(list.LinearSearch(10, 0, list.Count - 1));
-            Assert.IsFalse(list.LinearSearch(8, 0, 3));
+            Assert.IsTrue(list.LinearSearch(9, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.LinearSearch(10, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.LinearSearch(8, 0, 3).Item1);
         }
 
         [TestMethod]
@@ -98,8 +98,8 @@ namespace DaATests
             list.AddLast(8);
             list.AddLast(9);
 
-            Assert.IsTrue(list.ExponentialSearch(5, 0, list.Count - 1));
-            Assert.IsFalse(list.ExponentialSearch(5, 0, 2));
+            Assert.IsTrue(list.ExponentialSearch(5, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.ExponentialSearch(5, 0, 2).Item1);
         }
     }
 
@@ -117,10 +117,10 @@ namespace DaATests
             stack.Push(8);
             stack.Push(3);
 
-            Assert.IsTrue(stack.LinearSearch(9, 0, stack.Count - 1));
-            Assert.IsFalse(stack.LinearSearch(10, 0, stack.Count - 1));
-            Assert.IsTrue(stack.LinearSearch(8, 3, 5));
-            Assert.IsFalse(stack.LinearSearch(8, 0, 2));
+            Assert.IsTrue(stack.LinearSearch(9, 0, stack.Count - 1).Item1);
+            Assert.IsFalse(stack.LinearSearch(10, 0, stack.Count - 1).Item1);
+            Assert.IsTrue(stack.LinearSearch(8, 3, 5).Item1);
+            Assert.IsFalse(stack.LinearSearch(8, 0, 2).Item1);
         }
 
 
@@ -136,10 +136,10 @@ namespace DaATests
             stack.Push(8);
             stack.Push(3);
 
-            Assert.IsTrue(stack.ExponentialSearch(5, 0, stack.Count - 1));
-            Assert.IsFalse(stack.ExponentialSearch(4, 0, stack.Count - 1));
-            Assert.IsTrue(stack.ExponentialSearch(8, 3, 5));
-            Assert.IsFalse(stack.ExponentialSearch(8, 0, 2));
+            Assert.IsTrue(stack.ExponentialSearch(5, 0, stack.Count - 1).Item1);
+            Assert.IsFalse(stack.ExponentialSearch(4, 0, stack.Count - 1).Item1);
+            Assert.IsTrue(stack.ExponentialSearch(8, 3, 5).Item1);
+            Assert.IsFalse(stack.ExponentialSearch(8, 0, 2).Item1);
         }
 
         [TestMethod]
@@ -276,9 +276,9 @@ namespace DaATests
             queue.Enqueue(1);
             queue.Enqueue(8);
             queue.Enqueue(3);
-            Assert.IsTrue(queue.LinearSearch(9, 2, 4));
-            Assert.IsFalse(queue.LinearSearch(7, 2, 4));
-            Assert.IsFalse(queue.LinearSearch(9, 0, 1));
+            Assert.IsTrue(queue.LinearSearch(9, 2, 4).Item1);
+            Assert.IsFalse(queue.LinearSearch(7, 2, 4).Item1);
+            Assert.IsFalse(queue.LinearSearch(9, 0, 1).Item1);
         }
 
         [TestMethod]
@@ -291,9 +291,9 @@ namespace DaATests
             queue.Enqueue(1);
             queue.Enqueue(8);
             queue.Enqueue(3);
-            Assert.IsTrue(queue.ExponentialSearch(9, 2, 4));
-            Assert.IsFalse(queue.ExponentialSearch(7, 2, 4));
-            Assert.IsFalse(queue.ExponentialSearch(9, 0, 1));
+            Assert.IsTrue(queue.ExponentialSearch(9, 2, 4).Item1);
+            Assert.IsFalse(queue.ExponentialSearch(7, 2, 4).Item1);
+            Assert.IsFalse(queue.ExponentialSearch(9, 0, 1).Item1);
         }
 
     }

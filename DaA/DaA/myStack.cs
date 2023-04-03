@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,34 +67,42 @@ namespace DaA
             Items[index2] = temp;
         }
 
-        public bool LinearSearch(T value, int startIndex, int endIndex)
+        public (bool, TimeSpan) LinearSearch(T value, int startIndex, int endIndex)
         {
             if (startIndex < 0 || endIndex >= Items.Count || startIndex > endIndex)
             {
                 throw new ArgumentOutOfRangeException("Invalid start or end index.");
             }
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             for (int i = startIndex; i <= endIndex; i++)
             {
                 if (Items[i].CompareTo(value) == 0)
                 {
-                    return true;
+                    stopwatch.Stop();
+                    return (true, stopwatch.Elapsed);
                 }
             }
-
-            return false;
+            stopwatch.Stop();
+            return (false, stopwatch.Elapsed);
         }
 
-        public bool ExponentialSearch(T value, int startIndex, int endIndex)
+        public (bool, TimeSpan) ExponentialSearch(T value, int startIndex, int endIndex)
         {
             if (startIndex < 0 || endIndex >= Items.Count || startIndex > endIndex)
             {
                 throw new ArgumentOutOfRangeException("Invalid start or end index.");
             }
 
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             if (Items[startIndex].CompareTo(value) == 0)
             {
-                return true;
+                stopwatch.Stop();
+                return (true, stopwatch.Elapsed);
             }
 
             int bound = 1;
@@ -101,14 +110,16 @@ namespace DaA
             {
                 if (Items[startIndex + bound].CompareTo(value) == 0)
                 {
-                    return true;
+                    return (true, stopwatch.Elapsed);
                 }
                 bound *= 2;
             }
 
             int left = Math.Max(bound / 2, startIndex);
             int right = Math.Min(bound, endIndex);
-            return BinarySearch(value, left, right);
+            bool result = BinarySearch(value, left, right);
+            stopwatch.Stop();
+            return (result, stopwatch.Elapsed);
         }
 
 
@@ -135,8 +146,10 @@ namespace DaA
 
             return false;
         }
-        public void BubbleSort(int startIndex, int endIndex)
+        public TimeSpan BubbleSort(int startIndex, int endIndex)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             for (int i = startIndex; i < endIndex; i++)
             {
                 for (int j = startIndex; j < endIndex - i + startIndex; j++)
@@ -147,11 +160,17 @@ namespace DaA
                     }
                 }
             }
+            stopwatch.Stop();
+            return stopwatch.Elapsed;
         }
 
-        public void QuickSort(int startIndex, int endIndex)
+        public TimeSpan QuickSort(int startIndex, int endIndex)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             QuickSortHelper(startIndex, endIndex);
+            stopwatch.Stop();
+            return stopwatch.Elapsed;
         }
 
         private void QuickSortHelper(int startIndex, int endIndex)

@@ -4,6 +4,7 @@
     <projectFile>DaA/DaA.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="f3203957-a331-42af-997d-0f2fe5d40adf" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/.idea.DaA/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/.idea.DaA/.idea/encodings.xml" afterDir="false" />
@@ -27,6 +28,9 @@
       <change beforePath="$PROJECT_DIR$/DaA/obj/Debug/DaA.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DaA/obj/Debug/DaA.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DaATests/obj/Debug/net6.0/DaATests.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DaATests/obj/Debug/net6.0/DaATests.csproj.AssemblyReference.cache" afterDir="false" />
     </list>
+=======
+    <list default="true" id="f3203957-a331-42af-997d-0f2fe5d40adf" name="Changes" comment="" />
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +47,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< Updated upstream
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
@@ -62,6 +67,27 @@
     ]
   }
 }]]></component>
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Admin\\AppData\\Local\\Symbols\\src&quot;
+    ]
+  }
+}</component>
+>>>>>>> Stashed changes
   <component name="RunManager">
     <configuration name="DaA" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -91,6 +117,12 @@
       <option name="presentableId" value="Default" />
       <updated>1679865390292</updated>
       <workItem from="1679865392953" duration="2118000" />
+<<<<<<< Updated upstream
+=======
+      <workItem from="1679912026695" duration="1000" />
+      <workItem from="1680518553917" duration="221000" />
+      <workItem from="1680518910336" duration="52000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>

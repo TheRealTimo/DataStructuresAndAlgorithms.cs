@@ -99,6 +99,26 @@ namespace DaA
 
         }
 
+        private void ShowMessage(object result, TimeSpan elapsedTime)
+        {
+            double roundedElapsedSeconds = Math.Round(elapsedTime.TotalSeconds, 1);
+            TimeSpan roundedElapsedTime = TimeSpan.FromSeconds(roundedElapsedSeconds);
+
+            if (result is bool booleanValue)
+            {
+                MessageBox.Show($"Value was found: {booleanValue}. It took {roundedElapsedTime}.");
+            }
+            else if (result is string stringValue)
+            {
+                MessageBox.Show($"Sorted: {stringValue}. It took {roundedElapsedTime}.");
+            }
+            else
+            {
+                MessageBox.Show($"Operation took {roundedElapsedTime}.");
+            }
+        }
+
+
         private void form_button_search_Click(object sender, EventArgs e)
         {
             if (form_textBox_search.Text == "")
@@ -134,12 +154,18 @@ namespace DaA
                 case "Linear Search":
                     if (dataStructure == "Linked List")
                     {
+<<<<<<< Updated upstream
                         //bool llls = myList.LinearSearch(searchFor, searchFrom, searchUntil);
                         //MessageBox.Show(llls.ToString());
+=======
+                        (bool found, TimeSpan elapsedTime) = myList.LinearSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
+>>>>>>> Stashed changes
 
                     }
                     else if (dataStructure == "Stack")
                     {
+<<<<<<< Updated upstream
                         //bool sls = myStack.LinearSearch(searchFor, searchFrom, searchUntil);
                         //MessageBox.Show(sls.ToString());
                     }
@@ -147,6 +173,15 @@ namespace DaA
                     {
                         //bool qls = myQueue.LinearSearch(searchFor, searchFrom, searchUntil);
                         //MessageBox.Show(qls.ToString());
+=======
+                        (bool found, TimeSpan elapsedTime) = myStack.LinearSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
+                    }
+                    else if (dataStructure == "Queue")
+                    {
+                        (bool found, TimeSpan elapsedTime) = myQueue.LinearSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
+>>>>>>> Stashed changes
                     }
                     else
                     {
@@ -158,6 +193,7 @@ namespace DaA
                     if (dataStructure == "Linked List")
                     {
                         myList.BubbleSort(0, 0); // Sort the list first
+<<<<<<< Updated upstream
                         //bool llbs = myList.ExponentialSearch(searchFor, searchFrom, searchUntil);
                         //MessageBox.Show(llbs.ToString());
                     }
@@ -172,6 +208,21 @@ namespace DaA
                         //myQueue.BubbleSort(0, 0); // Sort the queue first
                         //bool qbs = myQueue.ExponentialSearch(searchFor, searchFrom, searchUntil);
                         //MessageBox.Show(qbs.ToString());
+=======
+                        (bool found, TimeSpan elapsedTime) = myList.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
+                    }
+                    else if (dataStructure == "Stack")
+                    {
+                        myStack.BubbleSort(0, 0); // Sort the stack first
+                        (bool found, TimeSpan elapsedTime) = myStack.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
+                    }
+                    else if (dataStructure == "Queue")
+                    {
+                        (bool found, TimeSpan elapsedTime) = myQueue.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
+>>>>>>> Stashed changes
                     }
                     else
                     {
@@ -197,6 +248,7 @@ namespace DaA
                 case "Bubble Sort":
                     if (dataStructure == "Linked List")
                     {
+<<<<<<< Updated upstream
                         //myList.BubbleSort(sortFrom, sortUntil);
                         //MessageBox.Show(myList.ToString());
                     }
@@ -209,6 +261,20 @@ namespace DaA
                     {
                         //myQueue.BubbleSort(sortFrom, sortUntil);
                         //MessageBox.Show(myQueue.ToString());
+=======
+                        TimeSpan ts = myList.BubbleSort(sortFrom, sortUntil);
+                        ShowMessage(myList.ToString(), ts);
+                    }
+                    else if (dataStructure == "Stack")
+                    {
+                        TimeSpan ts = myStack.BubbleSort(sortFrom, sortUntil);
+                        ShowMessage(myStack.ToString(), ts);
+                    }
+                    else if (dataStructure == "Queue")
+                    {
+                        TimeSpan ts = myQueue.BubbleSort(sortFrom, sortUntil);
+                        ShowMessage(myQueue.ToString(), ts);
+>>>>>>> Stashed changes
                     }
                     else
                     {
@@ -218,6 +284,7 @@ namespace DaA
                 case "Quick Sort":
                     if (dataStructure == "Linked List")
                     {
+<<<<<<< Updated upstream
                         //myList.QuickSort(sortFrom, sortUntil);
                         //MessageBox.Show(myList.ToString());
                     }
@@ -230,6 +297,20 @@ namespace DaA
                     {
                         //myQueue.QuickSort(sortFrom, sortUntil);
                         //MessageBox.Show(myQueue.ToString());
+=======
+                        TimeSpan ts = myList.QuickSort(sortFrom, sortUntil);
+                        ShowMessage(myList.ToString(), ts);
+                    }
+                    else if (dataStructure == "Stack")
+                    {
+                        TimeSpan ts = myStack.QuickSort(sortFrom, sortUntil);
+                        ShowMessage(myStack.ToString(), ts);
+                    }
+                    else if (dataStructure == "Queue")
+                    {
+                        TimeSpan ts = myQueue.QuickSort(sortFrom, sortUntil);
+                        ShowMessage(myQueue.ToString(), ts);
+>>>>>>> Stashed changes
                     }
                     else
                     {
