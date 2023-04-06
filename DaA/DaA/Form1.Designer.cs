@@ -51,6 +51,8 @@
             this.form_numericUpDown_sortUntil = new System.Windows.Forms.NumericUpDown();
             this.form_button_sort = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.form_label_dataset_titel = new System.Windows.Forms.Label();
+            this.form_label_dataset_data = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.form_numericUpDown_searchFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form_numericUpDown_searchUntil)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form_numericUpDown_sortFrom)).BeginInit();
@@ -59,12 +61,13 @@
             // 
             // form_button_initData
             // 
-            this.form_button_initData.Location = new System.Drawing.Point(341, 88);
+            this.form_button_initData.Location = new System.Drawing.Point(474, 9);
             this.form_button_initData.Name = "form_button_initData";
             this.form_button_initData.Size = new System.Drawing.Size(75, 23);
             this.form_button_initData.TabIndex = 2;
             this.form_button_initData.Text = "Open CSV file";
             this.form_button_initData.UseVisualStyleBackColor = true;
+            this.form_button_initData.Visible = false;
             this.form_button_initData.Click += new System.EventHandler(this.form_button_initData_Click);
             // 
             // form_label_currentStructureTitle
@@ -88,7 +91,7 @@
             // form_label_convert
             // 
             this.form_label_convert.AutoSize = true;
-            this.form_label_convert.Location = new System.Drawing.Point(12, 74);
+            this.form_label_convert.Location = new System.Drawing.Point(12, 132);
             this.form_label_convert.Name = "form_label_convert";
             this.form_label_convert.Size = new System.Drawing.Size(83, 13);
             this.form_label_convert.TabIndex = 5;
@@ -101,14 +104,14 @@
             "Doubly Linked List",
             "Binary Tree",
             "Array List"});
-            this.form_comboBox_convert.Location = new System.Drawing.Point(15, 90);
+            this.form_comboBox_convert.Location = new System.Drawing.Point(12, 148);
             this.form_comboBox_convert.Name = "form_comboBox_convert";
             this.form_comboBox_convert.Size = new System.Drawing.Size(121, 21);
             this.form_comboBox_convert.TabIndex = 6;
             // 
             // form_button_convert
             // 
-            this.form_button_convert.Location = new System.Drawing.Point(142, 90);
+            this.form_button_convert.Location = new System.Drawing.Point(139, 146);
             this.form_button_convert.Name = "form_button_convert";
             this.form_button_convert.Size = new System.Drawing.Size(75, 23);
             this.form_button_convert.TabIndex = 7;
@@ -260,11 +263,31 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // form_label_dataset_titel
+            // 
+            this.form_label_dataset_titel.AutoSize = true;
+            this.form_label_dataset_titel.Location = new System.Drawing.Point(9, 80);
+            this.form_label_dataset_titel.Name = "form_label_dataset_titel";
+            this.form_label_dataset_titel.Size = new System.Drawing.Size(47, 13);
+            this.form_label_dataset_titel.TabIndex = 24;
+            this.form_label_dataset_titel.Text = "Dataset:";
+            // 
+            // form_label_dataset_data
+            // 
+            this.form_label_dataset_data.AutoSize = true;
+            this.form_label_dataset_data.Location = new System.Drawing.Point(12, 93);
+            this.form_label_dataset_data.Name = "form_label_dataset_data";
+            this.form_label_dataset_data.Size = new System.Drawing.Size(33, 13);
+            this.form_label_dataset_data.TabIndex = 25;
+            this.form_label_dataset_data.Text = "None";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(676, 289);
+            this.Controls.Add(this.form_label_dataset_data);
+            this.Controls.Add(this.form_label_dataset_titel);
             this.Controls.Add(this.form_button_sort);
             this.Controls.Add(this.form_numericUpDown_sortUntil);
             this.Controls.Add(this.form_label_sortUntil);
@@ -322,6 +345,8 @@
         private System.Windows.Forms.NumericUpDown form_numericUpDown_sortUntil;
         private System.Windows.Forms.Button form_button_sort;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label form_label_dataset_titel;
+        private System.Windows.Forms.Label form_label_dataset_data;
     }
 }
 

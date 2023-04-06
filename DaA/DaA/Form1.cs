@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Net.Mime;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -27,11 +28,18 @@ namespace DaA
             var roundedElapsedTime = TimeSpan.FromSeconds(roundedElapsedSeconds);
 
             if (result is bool booleanValue)
+            {
                 MessageBox.Show($"Value was found: {booleanValue}. It took {roundedElapsedTime}.");
+            }
             else if (result is string stringValue)
+            {
                 MessageBox.Show($"Sorted: {stringValue}. It took {roundedElapsedTime}.");
+                form_label_dataset_data.Text = stringValue;
+            }
             else
+            {
                 MessageBox.Show($"Operation took {roundedElapsedTime}.");
+            }
         }
 
         public void OpenFileDialogForm()
@@ -63,6 +71,7 @@ namespace DaA
                 if (lines.Length == 0)
                 {
                     MessageBox.Show("Error: file is empty.");
+                    form_label_currentStructure.Text = "None";
                     return;
                 }
 
@@ -75,19 +84,22 @@ namespace DaA
                 if (intNumbers.Count == 0)
                 {
                     MessageBox.Show("Error: file does not contain any valid integers.");
+                    form_label_currentStructure.Text = "None";
                     return;
                 }
 
                 MessageBox.Show("File loaded \n\rNumber of items: " + intNumbers.Count);
+                form_label_currentStructure.Text = "None";
             }
             else
             {
                 MessageBox.Show("No file selected");
+                form_label_currentStructure.Text = "None";
                 Application.Exit();
                 return;
             }
 
-
+            form_label_dataset_data.Text = string.Join(",", intNumbers);
             form_numericUpDown_searchFrom.Minimum = 0;
             form_numericUpDown_searchFrom.Maximum = intNumbers.Count - 1;
             form_numericUpDown_searchUntil.Minimum = 0;
@@ -186,18 +198,25 @@ namespace DaA
 
                     break;
                 case "Binary Search":
+                    //Data needs to be sorted for the Tree to use a binary search
                     if (dataStructure == "Doubly Linked List")
                     {
+                        myList.QuickSort(0, intNumbers.Count - 1);
+                        MessageBox.Show("Datastructure has been sorted to use binary search");
                         (var found, var elapsedTime) = myList.BinarySearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
                     }
-                    else if (dataStructure == "Binary Tree")
+                    else if (dataStructure == "Binary Tree") 
                     {
+                        myBinaryTree.QuickSort(0, intNumbers.Count -1);
+                        MessageBox.Show("Datastructure has been sorted to use binary search");
                         (var found, var elapsedTime) = myBinaryTree.BinarySearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
                     }
                     else if (dataStructure == "Array List")
                     {
+                        myArrayList.QuickSort(0, intNumbers.Count - 1);
+                        MessageBox.Show("Datastructure has been sorted to use binary search");
                         (var found, var elapsedTime) = myArrayList.BinarySearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
                     }
@@ -224,6 +243,11 @@ namespace DaA
             {
                 MessageBox.Show("Please make sure the search from is smaller or equal to the search until");
                 return;
+            }
+
+            if (dataStructure == "Binary Tree" && (sortFrom != 0 || sortUntil != intNumbers.Count - 1))
+            {
+                MessageBox.Show("Binary Tree can only sort the entire list");
             }
 
 
