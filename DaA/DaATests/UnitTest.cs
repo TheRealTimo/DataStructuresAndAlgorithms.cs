@@ -139,9 +139,9 @@ namespace DaATests
             list.AddLast(8);
             list.AddLast(3);
 
-            Assert.IsTrue(list.LinearSearch(9, 0, list.Count - 1));
-            Assert.IsFalse(list.LinearSearch(10, 0, list.Count - 1));
-            Assert.IsFalse(list.LinearSearch(8, 0, 3));
+            Assert.IsTrue(list.LinearSearch(9, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.LinearSearch(10, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.LinearSearch(8, 0, 3).Item1);
         }
 
 
@@ -157,9 +157,9 @@ namespace DaATests
             list.AddLast(8);
             list.AddLast(3);
 
-            Assert.IsTrue(list.BinarySearch(9, 0, list.Count - 1));
-            Assert.IsFalse(list.BinarySearch(10, 0, list.Count - 1));
-            Assert.IsFalse(list.BinarySearch(8, 0, 3));
+            Assert.IsTrue(list.BinarySearch(9, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.BinarySearch(10, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.BinarySearch(8, 0, 3).Item1);
         }
     }
 
@@ -286,9 +286,9 @@ namespace DaATests
             list.Add(8);
             list.Add(3);
 
-            Assert.IsTrue(list.LinearSearch(9, 0, list.Count - 1));
-            Assert.IsFalse(list.LinearSearch(10, 0, list.Count - 1));
-            Assert.IsFalse(list.LinearSearch(8, 0, 3));
+            Assert.IsTrue(list.LinearSearch(9, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.LinearSearch(10, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.LinearSearch(8, 0, 3).Item1);
         }
 
         [TestMethod]
@@ -302,8 +302,8 @@ namespace DaATests
             list.Add(8);
             list.Add(9);
 
-            Assert.IsTrue(list.BinarySearch(5, 0, list.Count - 1));
-            Assert.IsFalse(list.BinarySearch(5, 0, 2));
+            Assert.IsTrue(list.BinarySearch(5, 0, list.Count - 1).Item1);
+            Assert.IsFalse(list.BinarySearch(5, 0, 2).Item1);
         }
     }
 
@@ -390,9 +390,9 @@ namespace DaATests
 
             var list = tree.InOrderTraversal();
 
-            Assert.IsTrue(tree.LinearSearch(9, 0, list.Count - 1));
-            Assert.IsFalse(tree.LinearSearch(10, 0, list.Count - 1));
-            Assert.IsFalse(tree.LinearSearch(8, 0, 3));
+            Assert.IsTrue(tree.LinearSearch(9, 0, list.Count - 1).Item1);
+            Assert.IsFalse(tree.LinearSearch(10, 0, list.Count - 1).Item1);
+            Assert.IsFalse(tree.LinearSearch(8, 0, 3).Item1);
         }
 
         [TestMethod]
@@ -408,8 +408,8 @@ namespace DaATests
 
             var list = tree.InOrderTraversal();
 
-            Assert.IsTrue(tree.BinarySearch(5, 0, list.Count - 1));
-            Assert.IsFalse(tree.BinarySearch(5, 0, 2));
+            Assert.IsTrue(tree.BinarySearch(5, 0, list.Count - 1).Item1);
+            Assert.IsFalse(tree.BinarySearch(5, 0, 2).Item1);
 
         }
 

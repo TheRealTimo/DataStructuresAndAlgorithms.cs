@@ -68,26 +68,39 @@ namespace DaA
         private void form_button_initData_Click(object sender, EventArgs e)
         {
 
-            //Get the file and parse it
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string file = openFileDialog1.FileName;
                 string[] lines = File.ReadAllLines(file);
+                if (lines.Length == 0)
+                {
+                    MessageBox.Show("Error: file is empty.");
+                    return;
+                }
                 string[] numbers = lines[0].Split(',');
-
                 intNumbers = new List<int>();
+                int parsedNumber;
                 foreach (string number in numbers)
                 {
-                    intNumbers.Add(int.Parse(number));
+                    if (int.TryParse(number, out parsedNumber))
+                    {
+                        intNumbers.Add(parsedNumber);
+                    }
                 }
-                MessageBox.Show("File loaded");
-                MessageBox.Show(intNumbers.Count.ToString());
+                if (intNumbers.Count == 0)
+                {
+                    MessageBox.Show("Error: file does not contain any valid integers.");
+                    return;
+                }
+                MessageBox.Show("File loaded \n\rNumber of items: " + intNumbers.Count.ToString());
             }
             else
             {
                 MessageBox.Show("No file selected");
                 Application.Exit();
+                return;
             }
+
 
             form_numericUpDown_searchFrom.Minimum = 0;
             form_numericUpDown_searchFrom.Maximum = intNumbers.Count - 1;
@@ -107,6 +120,7 @@ namespace DaA
         {
             //Convert the string to an array of integers
             //Might need to parse CSV values to int
+
 
             string convertType = form_comboBox_convert.Text;
 
@@ -231,6 +245,13 @@ namespace DaA
             string dataStructure = form_label_currentStructure.Text;
             int sortFrom = (int)form_numericUpDown_sortFrom.Value;
             int sortUntil = (int)form_numericUpDown_sortUntil.Value;
+
+            if (form_numericUpDown_searchFrom.Value > form_numericUpDown_searchUntil.Value)
+            {
+                MessageBox.Show("Please make sure the search from is smaller or equal to the search until");
+                return;
+            }
+
 
             switch (sortType)
             {
