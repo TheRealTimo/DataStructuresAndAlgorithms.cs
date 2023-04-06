@@ -1,103 +1,145 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Management.Instrumentation;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Net.Mime;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+
 namespace DaA
 {
     public partial class Form1 : Form
     {
+        private List<int> intNumbers;
+        private MyArrayList<int> myArrayList;
+        private MyBinaryTree<int> myBinaryTree;
 
-        MyDoublyLinkedList<int> myList;
-        myStack<int> myStack;
-        myQueue<int> myQueue;
+        private MyDoublyLinkedList<int> myList;
 
         public Form1()
         {
             InitializeComponent();
+            OpenFileDialogForm();
+        }
+
+        private void ShowMessage(object result, TimeSpan elapsedTime)
+        {
+            var roundedElapsedSeconds = Math.Round(elapsedTime.TotalSeconds, 1);
+            var roundedElapsedTime = TimeSpan.FromSeconds(roundedElapsedSeconds);
+
+            if (result is bool booleanValue)
+            {
+                MessageBox.Show($"Value was found: {booleanValue}. It took {roundedElapsedTime}.");
+            }
+            else if (result is string stringValue)
+            {
+                MessageBox.Show($"Sorted: {stringValue}. It took {roundedElapsedTime}.");
+                form_label_dataset_data.Text = stringValue;
+            }
+            else
+            {
+                MessageBox.Show($"Operation took {roundedElapsedTime}.");
+            }
+        }
+
+        public void OpenFileDialogForm()
+        {
+            openFileDialog1 = new OpenFileDialog
+            {
+                FileName = "Select a text file",
+                Filter = "Text files (*.csv)|*.csv",
+                Title = "Open text file"
+            };
+
+            form_button_initData = new Button
+            {
+                Size = new Size(100, 20),
+                Location = new Point(15, 15),
+                Text = "Select file"
+            };
+            form_button_initData.Click += form_button_initData_Click;
+            Controls.Add(form_button_initData);
         }
 
 
         private void form_button_initData_Click(object sender, EventArgs e)
         {
-            if (form_textBox_initData.Text == "")
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Please enter some data to be sorted and searched");
+                var file = openFileDialog1.FileName;
+                var lines = File.ReadAllLines(file);
+                if (lines.Length == 0)
+                {
+                    MessageBox.Show("Error: file is empty.");
+                    form_label_currentStructure.Text = "None";
+                    return;
+                }
+
+                var numbers = lines[0].Split(',');
+                intNumbers = new List<int>();
+                int parsedNumber;
+                foreach (var number in numbers)
+                    if (int.TryParse(number, out parsedNumber))
+                        intNumbers.Add(parsedNumber);
+                if (intNumbers.Count == 0)
+                {
+                    MessageBox.Show("Error: file does not contain any valid integers.");
+                    form_label_currentStructure.Text = "None";
+                    return;
+                }
+
+                MessageBox.Show("File loaded \n\rNumber of items: " + intNumbers.Count);
+                form_label_currentStructure.Text = "None";
+            }
+            else
+            {
+                MessageBox.Show("No file selected");
+                form_label_currentStructure.Text = "None";
+                Application.Exit();
                 return;
             }
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(form_textBox_initData.Text, @"^[0-9, ]+$"))
-            {
-                MessageBox.Show("Please enter only numbers and , and space");
-                return;
-            }
-            
-            if (form_textBox_initData.Text[0] == ',' || form_textBox_initData.Text[0] == ' ' || form_textBox_initData.Text[form_textBox_initData.Text.Length - 1] == ',' || form_textBox_initData.Text[form_textBox_initData.Text.Length - 1] == ' ')
-            {
-                MessageBox.Show("Please only start and end with a number");
-                return;
-            }
-            int numberOfNumbers = form_textBox_initData.Text.Split(',').Length;
+            form_label_dataset_data.Text = string.Join(",", intNumbers);
             form_numericUpDown_searchFrom.Minimum = 0;
-            form_numericUpDown_searchFrom.Maximum = numberOfNumbers - 1;
+            form_numericUpDown_searchFrom.Maximum = intNumbers.Count - 1;
             form_numericUpDown_searchUntil.Minimum = 0;
-            form_numericUpDown_searchUntil.Maximum = numberOfNumbers - 1;
+            form_numericUpDown_searchUntil.Maximum = intNumbers.Count - 1;
             form_numericUpDown_sortFrom.Minimum = 0;
-            form_numericUpDown_sortFrom.Maximum = numberOfNumbers - 1;
+            form_numericUpDown_sortFrom.Maximum = intNumbers.Count - 1;
             form_numericUpDown_sortUntil.Minimum = 0;
-            form_numericUpDown_sortUntil.Maximum = numberOfNumbers - 1;
+            form_numericUpDown_sortUntil.Maximum = intNumbers.Count - 1;
             form_numericUpDown_searchFrom.Value = 0;
-            form_numericUpDown_searchUntil.Value = numberOfNumbers - 1;
+            form_numericUpDown_searchUntil.Value = intNumbers.Count - 1;
             form_numericUpDown_sortFrom.Value = 0;
-            form_numericUpDown_sortUntil.Value = numberOfNumbers - 1;
+            form_numericUpDown_sortUntil.Value = intNumbers.Count - 1;
         }
 
         private void form_button_convert_Click(object sender, EventArgs e)
         {
-            //Convert the string to an array of integers
-            string[] stringArray = form_textBox_initData.Text.Split(',');
-            int[] intArray = new int[stringArray.Length];
-            for (int i = 0; i < stringArray.Length; i++)
-            {
-                intArray[i] = int.Parse(stringArray[i]);
-            }
-            string convertType = form_comboBox_convert.Text;
+            var convertType = form_comboBox_convert.Text;
 
             switch (convertType)
             {
-                case "Linked List":
+                case "Doubly Linked List":
                     myList = new MyDoublyLinkedList<int>();
-                    foreach (int number in intArray)
-                    {
-                        myList.AddLast(number);
-                    }
+                    foreach (var number in intNumbers) myList.AddLast(number);
                     break;
-                case "Stack":
-                    myStack = new myStack<int>();
-                    foreach (int number in intArray)
-                    {
-                        myStack.Push(number);
-                    }
+                case "Array List":
+                    myArrayList = new MyArrayList<int>();
+                    foreach (var number in intNumbers) myArrayList.Add(number);
                     break;
-                case "Queue":
-                    myQueue = new myQueue<int>();
-                    foreach (int number in intArray)
-                    {
-                        myQueue.Enqueue(number);
-                    }
+                case "Binary Tree":
+                    myBinaryTree = new MyBinaryTree<int>();
+                    foreach (var number in intNumbers) myBinaryTree.Add(number);
                     break;
                 default:
                     MessageBox.Show("Please select a convert type");
                     break;
             }
-            form_label_currentStructure.Text = convertType.ToString();
 
+            form_label_currentStructure.Text = convertType;
         }
+
 
         private void form_button_search_Click(object sender, EventArgs e)
         {
@@ -107,46 +149,47 @@ namespace DaA
                 return;
             }
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(form_textBox_search.Text, @"^[0-9]+$"))
+            if (!Regex.IsMatch(form_textBox_search.Text, @"^[0-9]+$"))
             {
                 MessageBox.Show("Please enter only numbers");
                 return;
             }
-            
+
             if (form_numericUpDown_searchFrom.Value > form_numericUpDown_searchUntil.Value)
             {
                 MessageBox.Show("Please make sure the search from is smaller or equal to the search until");
                 return;
             }
+
             if (form_label_currentStructure.Text == "None")
             {
                 MessageBox.Show("Please convert the data first");
                 return;
             }
-            string searchType = form_comboBox_search.Text;
-            string dataStructure = form_label_currentStructure.Text;
-            int searchFrom = (int)form_numericUpDown_searchFrom.Value;
-            int searchUntil = (int)form_numericUpDown_searchUntil.Value;
-            int searchFor = int.Parse(form_textBox_search.Text);
+
+            var searchType = form_comboBox_search.Text;
+            var dataStructure = form_label_currentStructure.Text;
+            var searchFrom = (int)form_numericUpDown_searchFrom.Value;
+            var searchUntil = (int)form_numericUpDown_searchUntil.Value;
+            var searchFor = int.Parse(form_textBox_search.Text);
 
             switch (searchType)
             {
                 case "Linear Search":
-                    if (dataStructure == "Linked List")
+                    if (dataStructure == "Doubly Linked List")
                     {
-                        bool llls = myList.LinearSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(llls.ToString());
-
+                        (var found, var elapsedTime) = myList.LinearSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
                     }
-                    else if (dataStructure == "Stack")
+                    else if (dataStructure == "Binary Tree")
                     {
-                        bool sls = myStack.LinearSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(sls.ToString());
+                        (var found, var elapsedTime) = myBinaryTree.LinearSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
                     }
-                    else if (dataStructure == "Queue")
+                    else if (dataStructure == "Array List")
                     {
-                        bool qls = myQueue.LinearSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(qls.ToString());
+                        (var found, var elapsedTime) = myArrayList.LinearSearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
                     }
                     else
                     {
@@ -154,93 +197,110 @@ namespace DaA
                     }
 
                     break;
-                case "Exponential Search":
-                    if (dataStructure == "Linked List")
+                case "Binary Search":
+                    //Data needs to be sorted for the Tree to use a binary search
+                    if (dataStructure == "Doubly Linked List")
                     {
-                        myList.BubbleSort(0, 0); // Sort the list first
-                        bool llbs = myList.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(llbs.ToString());
+                        myList.QuickSort(0, intNumbers.Count - 1);
+                        MessageBox.Show("Datastructure has been sorted to use binary search");
+                        (var found, var elapsedTime) = myList.BinarySearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
                     }
-                    else if (dataStructure == "Stack")
+                    else if (dataStructure == "Binary Tree") 
                     {
-                        myStack.BubbleSort(0, 0); // Sort the stack first
-                        bool sbs = myStack.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(sbs.ToString());
+                        myBinaryTree.QuickSort(0, intNumbers.Count -1);
+                        MessageBox.Show("Datastructure has been sorted to use binary search");
+                        (var found, var elapsedTime) = myBinaryTree.BinarySearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
                     }
-                    else if (dataStructure == "Queue")
+                    else if (dataStructure == "Array List")
                     {
-                        myQueue.BubbleSort(0, 0); // Sort the queue first
-                        bool qbs = myQueue.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        MessageBox.Show(qbs.ToString());
+                        myArrayList.QuickSort(0, intNumbers.Count - 1);
+                        MessageBox.Show("Datastructure has been sorted to use binary search");
+                        (var found, var elapsedTime) = myArrayList.BinarySearch(searchFor, searchFrom, searchUntil);
+                        ShowMessage(found, elapsedTime);
                     }
                     else
                     {
                         MessageBox.Show("Error");
                     }
+
                     break;
                 default:
                     MessageBox.Show("Please select a search type");
                     break;
             }
-
         }
 
         private void form_button_sort_Click(object sender, EventArgs e)
         {
-            string sortType = form_comboBox_sort.Text;
-            string dataStructure = form_label_currentStructure.Text;
-            int sortFrom = (int)form_numericUpDown_sortFrom.Value;
-            int sortUntil = (int)form_numericUpDown_sortUntil.Value;
+            var sortType = form_comboBox_sort.Text;
+            var dataStructure = form_label_currentStructure.Text;
+            var sortFrom = (int)form_numericUpDown_sortFrom.Value;
+            var sortUntil = (int)form_numericUpDown_sortUntil.Value;
+
+            if (form_numericUpDown_searchFrom.Value > form_numericUpDown_searchUntil.Value)
+            {
+                MessageBox.Show("Please make sure the search from is smaller or equal to the search until");
+                return;
+            }
+
+            if (dataStructure == "Binary Tree" && (sortFrom != 0 || sortUntil != intNumbers.Count - 1))
+            {
+                MessageBox.Show("Binary Tree can only sort the entire list");
+            }
+
 
             switch (sortType)
             {
                 case "Bubble Sort":
-                    if (dataStructure == "Linked List")
+                    if (dataStructure == "Doubly Linked List")
                     {
-                        myList.BubbleSort(sortFrom, sortUntil);
-                        MessageBox.Show(myList.ToString());
+                        var ts = myList.BubbleSort(sortFrom, sortUntil);
+                        ShowMessage(myList.ToString(), ts);
                     }
-                    else if (dataStructure == "Stack")
+                    else if (dataStructure == "Binary Tree")
                     {
-                        myStack.BubbleSort(sortFrom, sortUntil);
-                        MessageBox.Show(myStack.ToString());
+                        var ts = myBinaryTree.BubbleSort(sortFrom, sortUntil);
+                        ShowMessage(myBinaryTree.ToString(), ts);
                     }
-                    else if (dataStructure == "Queue")
+                    else if (dataStructure == "Array List")
                     {
-                        myQueue.BubbleSort(sortFrom, sortUntil);
-                        MessageBox.Show(myQueue.ToString());
+                        var ts = myArrayList.BubbleSort(sortFrom, sortUntil);
+                        ShowMessage(myArrayList.ToString(), ts);
                     }
                     else
                     {
                         MessageBox.Show("Error");
                     }
+
                     break;
                 case "Quick Sort":
-                    if (dataStructure == "Linked List")
+                    if (dataStructure == "Doubly Linked List")
                     {
-                        myList.QuickSort(sortFrom, sortUntil);
-                        MessageBox.Show(myList.ToString());
+                        var ts = myList.QuickSort(sortFrom, sortUntil);
+                        ShowMessage(myList.ToString(), ts);
                     }
-                    else if (dataStructure == "Stack")
+                    else if (dataStructure == "Binary Tree")
                     {
-                        myStack.QuickSort(sortFrom, sortUntil);
-                        MessageBox.Show(myStack.ToString());
+                        var ts = myBinaryTree.QuickSort(sortFrom, sortUntil);
+                        ShowMessage(myBinaryTree.ToString(), ts);
                     }
-                    else if (dataStructure == "Queue")
+                    else if (dataStructure == "Array List")
                     {
-                        myQueue.QuickSort(sortFrom, sortUntil);
-                        MessageBox.Show(myQueue.ToString());
+                        var ts = myArrayList.QuickSort(sortFrom, sortUntil);
+                        ShowMessage(myArrayList.ToString(), ts);
                     }
                     else
                     {
                         MessageBox.Show("Error");
                     }
+
                     break;
                 default:
                     MessageBox.Show("Please select a sort type");
                     break;
             }
         }
-
     }
 }
