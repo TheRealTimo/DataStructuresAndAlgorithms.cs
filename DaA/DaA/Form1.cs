@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Management.Instrumentation;
 using System.Text;
@@ -13,90 +14,16 @@ namespace DaA
     public partial class Form1 : Form
     {
 
+        private List<int> intNumbers;
+
         MyDoublyLinkedList<int> myList;
-        myStack<int> myStack;
-        myQueue<int> myQueue;
+        MyArrayList<int> myArrayList;
+        MyBinaryTree<int> myBinaryTree;
 
         public Form1()
         {
             InitializeComponent();
-        }
-
-
-        private void form_button_initData_Click(object sender, EventArgs e)
-        {
-            if (form_textBox_initData.Text == "")
-            {
-                MessageBox.Show("Please enter some data to be sorted and searched");
-                return;
-            }
-
-            if (!System.Text.RegularExpressions.Regex.IsMatch(form_textBox_initData.Text, @"^[0-9, ]+$"))
-            {
-                MessageBox.Show("Please enter only numbers and , and space");
-                return;
-            }
-            
-            if (form_textBox_initData.Text[0] == ',' || form_textBox_initData.Text[0] == ' ' || form_textBox_initData.Text[form_textBox_initData.Text.Length - 1] == ',' || form_textBox_initData.Text[form_textBox_initData.Text.Length - 1] == ' ')
-            {
-                MessageBox.Show("Please only start and end with a number");
-                return;
-            }
-            int numberOfNumbers = form_textBox_initData.Text.Split(',').Length;
-            form_numericUpDown_searchFrom.Minimum = 0;
-            form_numericUpDown_searchFrom.Maximum = numberOfNumbers - 1;
-            form_numericUpDown_searchUntil.Minimum = 0;
-            form_numericUpDown_searchUntil.Maximum = numberOfNumbers - 1;
-            form_numericUpDown_sortFrom.Minimum = 0;
-            form_numericUpDown_sortFrom.Maximum = numberOfNumbers - 1;
-            form_numericUpDown_sortUntil.Minimum = 0;
-            form_numericUpDown_sortUntil.Maximum = numberOfNumbers - 1;
-            form_numericUpDown_searchFrom.Value = 0;
-            form_numericUpDown_searchUntil.Value = numberOfNumbers - 1;
-            form_numericUpDown_sortFrom.Value = 0;
-            form_numericUpDown_sortUntil.Value = numberOfNumbers - 1;
-        }
-
-        private void form_button_convert_Click(object sender, EventArgs e)
-        {
-            //Convert the string to an array of integers
-            string[] stringArray = form_textBox_initData.Text.Split(',');
-            int[] intArray = new int[stringArray.Length];
-            for (int i = 0; i < stringArray.Length; i++)
-            {
-                intArray[i] = int.Parse(stringArray[i]);
-            }
-            string convertType = form_comboBox_convert.Text;
-
-            switch (convertType)
-            {
-                case "Linked List":
-                    myList = new MyDoublyLinkedList<int>();
-                    foreach (int number in intArray)
-                    {
-                        myList.AddLast(number);
-                    }
-                    break;
-                case "Stack":
-                    myStack = new myStack<int>();
-                    foreach (int number in intArray)
-                    {
-                        myStack.Push(number);
-                    }
-                    break;
-                case "Queue":
-                    myQueue = new myQueue<int>();
-                    foreach (int number in intArray)
-                    {
-                        myQueue.Enqueue(number);
-                    }
-                    break;
-                default:
-                    MessageBox.Show("Please select a convert type");
-                    break;
-            }
-            form_label_currentStructure.Text = convertType.ToString();
-
+            OpenFileDialogForm();
         }
 
         private void ShowMessage(object result, TimeSpan elapsedTime)
@@ -118,6 +45,102 @@ namespace DaA
             }
         }
 
+        public void OpenFileDialogForm()
+        {
+            openFileDialog1 = new OpenFileDialog()
+            {
+                FileName = "Select a text file",
+                Filter = "Text files (*.csv)|*.csv",
+                Title = "Open text file"
+            };
+
+            form_button_initData = new Button()
+            {
+                Size = new Size(100, 20),
+                Location = new Point(15, 15),
+                Text = "Select file"
+            };
+            form_button_initData.Click += new EventHandler(form_button_initData_Click);
+            Controls.Add(form_button_initData);
+        }
+
+
+        private void form_button_initData_Click(object sender, EventArgs e)
+        {
+
+            //Get the file and parse it
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string file = openFileDialog1.FileName;
+                string[] lines = File.ReadAllLines(file);
+                string[] numbers = lines[0].Split(',');
+
+                intNumbers = new List<int>();
+                foreach (string number in numbers)
+                {
+                    intNumbers.Add(int.Parse(number));
+                }
+                MessageBox.Show("File loaded");
+                MessageBox.Show(intNumbers.Count.ToString());
+            }
+            else
+            {
+                MessageBox.Show("No file selected");
+                Application.Exit();
+            }
+
+            form_numericUpDown_searchFrom.Minimum = 0;
+            form_numericUpDown_searchFrom.Maximum = intNumbers.Count - 1;
+            form_numericUpDown_searchUntil.Minimum = 0;
+            form_numericUpDown_searchUntil.Maximum = intNumbers.Count - 1;
+            form_numericUpDown_sortFrom.Minimum = 0;
+            form_numericUpDown_sortFrom.Maximum = intNumbers.Count - 1;
+            form_numericUpDown_sortUntil.Minimum = 0;
+            form_numericUpDown_sortUntil.Maximum = intNumbers.Count - 1;
+            form_numericUpDown_searchFrom.Value = 0;
+            form_numericUpDown_searchUntil.Value = intNumbers.Count - 1;
+            form_numericUpDown_sortFrom.Value = 0;
+            form_numericUpDown_sortUntil.Value = intNumbers.Count - 1;
+        }
+
+        private void form_button_convert_Click(object sender, EventArgs e)
+        {
+            //Convert the string to an array of integers
+            //Might need to parse CSV values to int
+
+            string convertType = form_comboBox_convert.Text;
+
+            switch (convertType)
+            {
+                case "Doubly Linked List":
+                    myList = new MyDoublyLinkedList<int>();
+                    foreach (int number in intNumbers)
+                    {
+                        myList.AddLast(number);
+                    }
+                    break;
+                case "Array List":
+                    myArrayList = new MyArrayList<int>();
+                    foreach (int number in intNumbers)
+                    {
+                        myArrayList.Add(number);
+                    }
+                    break;
+                case "Binary Tree":
+                    myBinaryTree = new MyBinaryTree<int>();
+                    foreach (int number in intNumbers)
+                    {
+                        myBinaryTree.Add(number);
+                    }
+                    break;
+                default:
+                    MessageBox.Show("Please select a convert type");
+                    break;
+            }
+            form_label_currentStructure.Text = convertType.ToString();
+
+        }
+
 
         private void form_button_search_Click(object sender, EventArgs e)
         {
@@ -132,7 +155,7 @@ namespace DaA
                 MessageBox.Show("Please enter only numbers");
                 return;
             }
-            
+
             if (form_numericUpDown_searchFrom.Value > form_numericUpDown_searchUntil.Value)
             {
                 MessageBox.Show("Please make sure the search from is smaller or equal to the search until");
@@ -152,36 +175,21 @@ namespace DaA
             switch (searchType)
             {
                 case "Linear Search":
-                    if (dataStructure == "Linked List")
+                    if (dataStructure == "Doubly Linked List")
                     {
-<<<<<<< Updated upstream
-                        //bool llls = myList.LinearSearch(searchFor, searchFrom, searchUntil);
-                        //MessageBox.Show(llls.ToString());
-=======
                         (bool found, TimeSpan elapsedTime) = myList.LinearSearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
->>>>>>> Stashed changes
 
                     }
-                    else if (dataStructure == "Stack")
+                    else if (dataStructure == "Binary Tree")
                     {
-<<<<<<< Updated upstream
-                        //bool sls = myStack.LinearSearch(searchFor, searchFrom, searchUntil);
-                        //MessageBox.Show(sls.ToString());
-                    }
-                    else if (dataStructure == "Queue")
-                    {
-                        //bool qls = myQueue.LinearSearch(searchFor, searchFrom, searchUntil);
-                        //MessageBox.Show(qls.ToString());
-=======
-                        (bool found, TimeSpan elapsedTime) = myStack.LinearSearch(searchFor, searchFrom, searchUntil);
+                        (bool found, TimeSpan elapsedTime) = myBinaryTree.LinearSearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
                     }
-                    else if (dataStructure == "Queue")
+                    else if (dataStructure == "Array List")
                     {
-                        (bool found, TimeSpan elapsedTime) = myQueue.LinearSearch(searchFor, searchFrom, searchUntil);
+                        (bool found, TimeSpan elapsedTime) = myArrayList.LinearSearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
->>>>>>> Stashed changes
                     }
                     else
                     {
@@ -189,40 +197,21 @@ namespace DaA
                     }
 
                     break;
-                case "Exponential Search":
-                    if (dataStructure == "Linked List")
+                case "Binary Search":
+                    if (dataStructure == "Doubly Linked List")
                     {
-                        myList.BubbleSort(0, 0); // Sort the list first
-<<<<<<< Updated upstream
-                        //bool llbs = myList.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        //MessageBox.Show(llbs.ToString());
-                    }
-                    else if (dataStructure == "Stack")
-                    {
-                        //myStack.BubbleSort(0, 0); // Sort the stack first
-                        //bool sbs = myStack.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        //MessageBox.Show(sbs.ToString());
-                    }
-                    else if (dataStructure == "Queue")
-                    {
-                        //myQueue.BubbleSort(0, 0); // Sort the queue first
-                        //bool qbs = myQueue.ExponentialSearch(searchFor, searchFrom, searchUntil);
-                        //MessageBox.Show(qbs.ToString());
-=======
-                        (bool found, TimeSpan elapsedTime) = myList.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        (bool found, TimeSpan elapsedTime) = myList.BinarySearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
                     }
-                    else if (dataStructure == "Stack")
+                    else if (dataStructure == "Binary Tree")
                     {
-                        myStack.BubbleSort(0, 0); // Sort the stack first
-                        (bool found, TimeSpan elapsedTime) = myStack.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        (bool found, TimeSpan elapsedTime) = myBinaryTree.BinarySearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
                     }
-                    else if (dataStructure == "Queue")
+                    else if (dataStructure == "Array List")
                     {
-                        (bool found, TimeSpan elapsedTime) = myQueue.ExponentialSearch(searchFor, searchFrom, searchUntil);
+                        (bool found, TimeSpan elapsedTime) = myArrayList.BinarySearch(searchFor, searchFrom, searchUntil);
                         ShowMessage(found, elapsedTime);
->>>>>>> Stashed changes
                     }
                     else
                     {
@@ -246,35 +235,20 @@ namespace DaA
             switch (sortType)
             {
                 case "Bubble Sort":
-                    if (dataStructure == "Linked List")
+                    if (dataStructure == "Doubly Linked List")
                     {
-<<<<<<< Updated upstream
-                        //myList.BubbleSort(sortFrom, sortUntil);
-                        //MessageBox.Show(myList.ToString());
-                    }
-                    else if (dataStructure == "Stack")
-                    {
-                        //myStack.BubbleSort(sortFrom, sortUntil);
-                        //MessageBox.Show(myStack.ToString());
-                    }
-                    else if (dataStructure == "Queue")
-                    {
-                        //myQueue.BubbleSort(sortFrom, sortUntil);
-                        //MessageBox.Show(myQueue.ToString());
-=======
                         TimeSpan ts = myList.BubbleSort(sortFrom, sortUntil);
                         ShowMessage(myList.ToString(), ts);
                     }
-                    else if (dataStructure == "Stack")
+                    else if (dataStructure == "Binary Tree")
                     {
-                        TimeSpan ts = myStack.BubbleSort(sortFrom, sortUntil);
-                        ShowMessage(myStack.ToString(), ts);
+                        TimeSpan ts = myBinaryTree.BubbleSort(sortFrom, sortUntil);
+                        ShowMessage(myBinaryTree.ToString(), ts);
                     }
-                    else if (dataStructure == "Queue")
+                    else if (dataStructure == "Array List")
                     {
-                        TimeSpan ts = myQueue.BubbleSort(sortFrom, sortUntil);
-                        ShowMessage(myQueue.ToString(), ts);
->>>>>>> Stashed changes
+                        TimeSpan ts = myArrayList.BubbleSort(sortFrom, sortUntil);
+                        ShowMessage(myArrayList.ToString(), ts);
                     }
                     else
                     {
@@ -282,35 +256,20 @@ namespace DaA
                     }
                     break;
                 case "Quick Sort":
-                    if (dataStructure == "Linked List")
+                    if (dataStructure == "Doubly Linked List")
                     {
-<<<<<<< Updated upstream
-                        //myList.QuickSort(sortFrom, sortUntil);
-                        //MessageBox.Show(myList.ToString());
-                    }
-                    else if (dataStructure == "Stack")
-                    {
-                        //myStack.QuickSort(sortFrom, sortUntil);
-                        //MessageBox.Show(myStack.ToString());
-                    }
-                    else if (dataStructure == "Queue")
-                    {
-                        //myQueue.QuickSort(sortFrom, sortUntil);
-                        //MessageBox.Show(myQueue.ToString());
-=======
                         TimeSpan ts = myList.QuickSort(sortFrom, sortUntil);
                         ShowMessage(myList.ToString(), ts);
                     }
-                    else if (dataStructure == "Stack")
+                    else if (dataStructure == "Binary Tree")
                     {
-                        TimeSpan ts = myStack.QuickSort(sortFrom, sortUntil);
-                        ShowMessage(myStack.ToString(), ts);
+                        TimeSpan ts = myBinaryTree.QuickSort(sortFrom, sortUntil);
+                        ShowMessage(myBinaryTree.ToString(), ts);
                     }
-                    else if (dataStructure == "Queue")
+                    else if (dataStructure == "Array List")
                     {
-                        TimeSpan ts = myQueue.QuickSort(sortFrom, sortUntil);
-                        ShowMessage(myQueue.ToString(), ts);
->>>>>>> Stashed changes
+                        TimeSpan ts = myArrayList.QuickSort(sortFrom, sortUntil);
+                        ShowMessage(myArrayList.ToString(), ts);
                     }
                     else
                     {

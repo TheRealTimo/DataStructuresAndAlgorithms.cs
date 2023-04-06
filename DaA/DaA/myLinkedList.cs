@@ -315,9 +315,7 @@ namespace DaA
                 throw new ArgumentOutOfRangeException("Invalid start or end index.");
             }
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
+            Stopwatch sw = Stopwatch.StartNew();
 
             bool swapped;
             Node startNode = GetNodeAt(startIndex);
@@ -340,9 +338,9 @@ namespace DaA
 
                 endNode = endNode.Previous;
             } while (swapped);
+            sw.Stop();
+            return sw.Elapsed;
 
-            stopwatch.Stop();
-            return stopwatch.Elapsed;
         }
 
 
@@ -352,11 +350,12 @@ namespace DaA
             {
                 throw new ArgumentOutOfRangeException("Invalid start or end index.");
             }
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            Stopwatch sw = Stopwatch.StartNew();
+
             QuickSortInternal(startIndex, endIndex);
-            stopwatch.Stop();
-            return stopwatch.Elapsed;
+            sw.Stop();
+            return sw.Elapsed;
+
         }
 
         private void QuickSortInternal(int startIndex, int endIndex)
@@ -389,61 +388,32 @@ namespace DaA
             return i + 1;
         }
 
-        public (bool,TimeSpan) LinearSearch(T value, int startIndex, int endIndex)
+        public (bool, TimeSpan) LinearSearch(T value, int startIndex, int endIndex)
         {
             if (startIndex < 0 || endIndex >= Count || startIndex > endIndex)
             {
                 throw new ArgumentOutOfRangeException("Invalid start or end index.");
             }
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            Stopwatch sw = Stopwatch.StartNew();
 
             Node currentNode = GetNodeAt(startIndex);
             for (int i = startIndex; i <= endIndex; i++)
             {
                 if (EqualityComparer<T>.Default.Equals(currentNode.Value, value))
                 {
-                    stopwatch.Stop();
-                    return (true, stopwatch.Elapsed);
+                    sw.Stop();
+                    return (true, sw.Elapsed);
                 }
                 currentNode = currentNode.Next;
             }
-            stopwatch.Stop();
-            return (false, stopwatch.Elapsed);
+
+            return (false, sw.Elapsed);
         }
 
-        public (bool, TimeSpan) ExponentialSearch(T value, int startIndex, int endIndex)
+        public (bool, TimeSpan) BinarySearch(T value, int startIndex, int endIndex)
         {
-            if (startIndex < 0 || endIndex >= Count || startIndex > endIndex)
-            {
-                throw new ArgumentOutOfRangeException("Invalid start or end index.");
-            }
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            if (EqualityComparer<T>.Default.Equals(GetNodeAt(startIndex).Value, value))
-            {
-                stopwatch.Stop();
-                return (true, stopwatch.Elapsed);
-            }
-
-            int bound = 1;
-            while (bound < endIndex - startIndex + 1 && Comparer<T>.Default.Compare(GetNodeAt(startIndex + bound).Value, value) <= 0)
-            {
-                bound *= 2;
-            }
-
-            int newStartIndex = startIndex + bound / 2;
-            int newEndIndex = Math.Min(startIndex + bound, endIndex);
-
-            bool result = BinarySearch(value, newStartIndex, newEndIndex);
-            stopwatch.Stop();
-            return (result, stopwatch.Elapsed);
-        }
-
-        private bool BinarySearch(T value, int startIndex, int endIndex)
-        {
+            Stopwatch sw = Stopwatch.StartNew();
             while (startIndex <= endIndex)
             {
                 int middleIndex = startIndex + (endIndex - startIndex) / 2;
@@ -452,7 +422,8 @@ namespace DaA
                 int comparisonResult = Comparer<T>.Default.Compare(middleNode.Value, value);
                 if (comparisonResult == 0)
                 {
-                    return true;
+                    sw.Stop();
+                    return (true, sw.Elapsed);
                 }
                 else if (comparisonResult < 0)
                 {
@@ -463,8 +434,8 @@ namespace DaA
                     endIndex = middleIndex - 1;
                 }
             }
-
-            return false;
+            sw.Stop();
+            return (false, sw.Elapsed);
         }
 
 
@@ -472,4 +443,3 @@ namespace DaA
 
     }
 }
-

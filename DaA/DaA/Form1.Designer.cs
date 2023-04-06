@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.form_label_initData = new System.Windows.Forms.Label();
-            this.form_textBox_initData = new System.Windows.Forms.TextBox();
             this.form_button_initData = new System.Windows.Forms.Button();
             this.form_label_currentStructureTitle = new System.Windows.Forms.Label();
             this.form_label_currentStructure = new System.Windows.Forms.Label();
@@ -52,35 +50,20 @@
             this.form_label_sortUntil = new System.Windows.Forms.Label();
             this.form_numericUpDown_sortUntil = new System.Windows.Forms.NumericUpDown();
             this.form_button_sort = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.form_numericUpDown_searchFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form_numericUpDown_searchUntil)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form_numericUpDown_sortFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form_numericUpDown_sortUntil)).BeginInit();
             this.SuspendLayout();
             // 
-            // form_label_initData
-            // 
-            this.form_label_initData.AutoSize = true;
-            this.form_label_initData.Location = new System.Drawing.Point(12, 9);
-            this.form_label_initData.Name = "form_label_initData";
-            this.form_label_initData.Size = new System.Drawing.Size(149, 13);
-            this.form_label_initData.TabIndex = 0;
-            this.form_label_initData.Text = "Enter numbers seperated by \',\'";
-            // 
-            // form_textBox_initData
-            // 
-            this.form_textBox_initData.Location = new System.Drawing.Point(15, 25);
-            this.form_textBox_initData.Name = "form_textBox_initData";
-            this.form_textBox_initData.Size = new System.Drawing.Size(347, 20);
-            this.form_textBox_initData.TabIndex = 1;
-            // 
             // form_button_initData
             // 
-            this.form_button_initData.Location = new System.Drawing.Point(368, 25);
+            this.form_button_initData.Location = new System.Drawing.Point(341, 88);
             this.form_button_initData.Name = "form_button_initData";
             this.form_button_initData.Size = new System.Drawing.Size(75, 23);
             this.form_button_initData.TabIndex = 2;
-            this.form_button_initData.Text = "Save";
+            this.form_button_initData.Text = "Open CSV file";
             this.form_button_initData.UseVisualStyleBackColor = true;
             this.form_button_initData.Click += new System.EventHandler(this.form_button_initData_Click);
             // 
@@ -115,9 +98,9 @@
             // 
             this.form_comboBox_convert.FormattingEnabled = true;
             this.form_comboBox_convert.Items.AddRange(new object[] {
-            "Linked List",
-            "Stack",
-            "Queue"});
+            "Doubly Linked List",
+            "Binary Tree",
+            "Array List"});
             this.form_comboBox_convert.Location = new System.Drawing.Point(15, 90);
             this.form_comboBox_convert.Name = "form_comboBox_convert";
             this.form_comboBox_convert.Size = new System.Drawing.Size(121, 21);
@@ -162,7 +145,7 @@
             // 
             this.form_comboBox_search.FormattingEnabled = true;
             this.form_comboBox_search.Items.AddRange(new object[] {
-            "Exponential Search",
+            "Binary Search",
             "Linear Search"});
             this.form_comboBox_search.Location = new System.Drawing.Point(156, 210);
             this.form_comboBox_search.Name = "form_comboBox_search";
@@ -273,6 +256,10 @@
             this.form_button_sort.UseVisualStyleBackColor = true;
             this.form_button_sort.Click += new System.EventHandler(this.form_button_sort_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -300,8 +287,6 @@
             this.Controls.Add(this.form_label_currentStructure);
             this.Controls.Add(this.form_label_currentStructureTitle);
             this.Controls.Add(this.form_button_initData);
-            this.Controls.Add(this.form_textBox_initData);
-            this.Controls.Add(this.form_label_initData);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.form_numericUpDown_searchFrom)).EndInit();
@@ -314,9 +299,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label form_label_initData;
-        private System.Windows.Forms.TextBox form_textBox_initData;
         private System.Windows.Forms.Button form_button_initData;
         private System.Windows.Forms.Label form_label_currentStructureTitle;
         private System.Windows.Forms.Label form_label_currentStructure;
@@ -339,6 +321,7 @@
         private System.Windows.Forms.Label form_label_sortUntil;
         private System.Windows.Forms.NumericUpDown form_numericUpDown_sortUntil;
         private System.Windows.Forms.Button form_button_sort;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
